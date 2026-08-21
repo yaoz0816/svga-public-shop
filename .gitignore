@@ -1,0 +1,17 @@
+# 虚拟环境
+.venv/
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 系统文件
+.DS_Store
+
+# 抓取中间缓存（getGoodsDetail 原始响应，可再生，不入库）
+output/.detail_cache/
+output/.related_detail_cache/
+
+# 过期备份数据
+output/svga-public-catalog.pre-layout.json
+output/svga-public-catalog.old-schema.bak.json

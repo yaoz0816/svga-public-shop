@@ -1,0 +1,39 @@
+{
+  "code": "1",
+  "err_code": 0,
+  "result": {
+    "recommend_page_count": 1,
+    "current_page": 1,
+    "totals": 2,
+    "recommend_list": [
+      {
+        "goods_id": 10001,
+        "goods_name": "Fixture MP4 Gift",
+        "goods_category": "Fixture category",
+        "goods_image": "https://media.example.test/thumb.webp",
+        "goods_video_url": "https://media.example.test/preview.mp4",
+        "g_sub_title": "Live gift",
+        "g_2d": 1,
+        "duration": 8,
+        "tagname_list": [
+          "MP4",
+          "Featured"
+        ]
+      },
+      {
+        "goods_id": 10002,
+        "goods_name": "Fixture Unsupported Gift",
+        "goods_category": "Fixture category",
+        "goods_image": "https://media.example.test/thumb-2.webp",
+        "goods_video_url": "https://media.example.test/download/original.zip",
+        "g_sub_title": "Live gift",
+        "g_2d": 0,
+        "duration": 12,
+        "tagname_list": [
+          "SVGA"
+        ]
+      }
+    ]
+  },
+  "message": "ok"
+}

@@ -1,0 +1,6 @@
+.venv
+docs
+scripts
+tests
+svga_public_catalog/
+output/*.json
