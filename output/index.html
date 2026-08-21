@@ -7,6 +7,25 @@
   <title>SVGA.WANG 公开商品目录</title>
   <style>
     :root {
+      color-scheme: dark;
+      --canvas: #0b1220;
+      --surface: #151f33;
+      --ink: #e6edf7;
+      --muted: #8b9bb2;
+      --line: #263349;
+      --accent: #e0525f;
+      --accent-hover: #f0717c;
+      --teal: #4fd1c5;
+      --preview: #0b1c34;
+      --shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+      --thumb-bg: #182134;
+      --strip-a: #1c2639;
+      --strip-b: #212c41;
+      --disabled-text: #5d6b80;
+      --disabled-bg: #202a3d;
+      --disabled-line: #202a3d;
+    }
+    :root[data-theme="light"] {
       color-scheme: light;
       --canvas: #f3f4f6;
       --surface: #ffffff;
@@ -18,6 +37,12 @@
       --teal: #167e77;
       --preview: #171c22;
       --shadow: 0 14px 36px rgba(20, 31, 43, 0.15);
+      --thumb-bg: #e8edf1;
+      --strip-a: #edf0f3;
+      --strip-b: #e4e8ec;
+      --disabled-text: #a2a9b2;
+      --disabled-bg: #edf0f2;
+      --disabled-line: #edf0f2;
     }
 
     * { box-sizing: border-box; }
@@ -51,6 +76,20 @@
     .intro { margin: 8px 0 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
     .status { min-width: 180px; margin: 0; color: var(--muted); font-size: 13px; text-align: right; }
     .status strong { display: block; color: var(--ink); font-size: 16px; }
+    .top-actions { display: flex; align-items: center; gap: 14px; }
+    .theme-toggle {
+      min-height: 38px;
+      padding: 7px 15px;
+      color: var(--ink);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .theme-toggle:hover, .theme-toggle:focus-visible { color: var(--accent); border-color: var(--accent); outline: none; }
     .filters { padding: 20px 0 4px; }
     .filter-row { display: flex; gap: 14px; align-items: center; justify-content: space-between; }
     .filter-summary { color: var(--teal); font-size: 13px; font-weight: 800; }
@@ -64,7 +103,7 @@
       border-radius: 5px;
       outline: none;
     }
-    .search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(216, 79, 94, 0.13); }
+    .search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(224, 82, 95, 0.2); }
     .filter-stack { margin-top: 13px; }
     .category-list {
       display: flex;
@@ -129,7 +168,7 @@
     }
     .catalog-card:hover, .catalog-card:focus-visible {
       border-color: var(--accent);
-      box-shadow: 0 8px 20px rgba(216, 79, 94, 0.16);
+      box-shadow: 0 8px 20px rgba(224, 82, 95, 0.26);
       outline: none;
       transform: translateY(-2px);
     }
@@ -139,7 +178,7 @@
       aspect-ratio: 1 / 1;
       place-items: center;
       overflow: hidden;
-      background: #e8edf1;
+      background: var(--thumb-bg);
     }
     .thumb img, .thumb video { width: 100%; height: 100%; object-fit: contain; }
     .missing-media {
@@ -153,9 +192,9 @@
       font-size: 12px;
       line-height: 1.45;
       text-align: center;
-      background: repeating-linear-gradient(45deg, #edf0f3 0, #edf0f3 9px, #e4e8ec 9px, #e4e8ec 18px);
+      background: repeating-linear-gradient(45deg, var(--strip-a) 0, var(--strip-a) 9px, var(--strip-b) 9px, var(--strip-b) 18px);
     }
-    .card-body { padding: 11px 12px 12px; }
+    .card-body { padding: 14px 16px 16px; }
     .card-meta { display: flex; gap: 8px; justify-content: space-between; color: var(--teal); font-size: 11px; font-weight: 800; }
     .card-number, .card-format { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .card-format { color: var(--muted); font-weight: 700; }
@@ -191,12 +230,13 @@
     }
     .pager button:hover:not(:disabled), .pager button:focus-visible { color: var(--accent); border-color: var(--accent); outline: none; }
     .pager button[aria-current="page"] { color: #ffffff; background: var(--accent); border-color: var(--accent); }
-    .pager button:disabled { color: #a2a9b2; cursor: not-allowed; }
+    .pager button:disabled { color: var(--disabled-text); cursor: not-allowed; }
     .ellipsis { min-width: 20px; color: var(--muted); text-align: center; }
     .empty { grid-column: 1 / -1; padding: 64px 20px; color: var(--muted); text-align: center; background: var(--surface); border: 1px dashed var(--line); border-radius: 7px; }
     .modal[hidden] { display: none; }
     .modal { position: fixed; z-index: 20; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(5, 13, 25, 0.82); }
     .detail-dialog {
+      position: relative;
       display: grid;
       grid-template-columns: minmax(360px, 1.1fr) minmax(340px, 0.9fr);
       width: min(1180px, 100%);
@@ -208,7 +248,7 @@
       border-radius: 7px;
       box-shadow: 0 22px 60px rgba(0, 0, 0, 0.42);
     }
-    .detail-preview { position: relative; display: grid; min-height: 600px; place-items: center; overflow: hidden; background: #0b1c34; }
+    .detail-preview { display: grid; min-height: 600px; place-items: center; overflow: hidden; background: #0b1c34; }
     .detail-preview img, .detail-preview video { display: block; width: 100%; height: 100%; max-height: min(820px, calc(100vh - 40px)); object-fit: contain; }
     .detail-preview .missing-media { max-width: 380px; height: 190px; color: #d9e7f4; background: rgba(255, 255, 255, 0.09); }
     .close-button {
@@ -275,7 +315,7 @@
     .actions button:hover:not(:disabled), .actions button:focus-visible, .actions a:hover, .actions a:focus-visible { color: #ffffff; border-color: #62c4d0; outline: none; }
     .actions .primary { color: #ffffff; background: var(--accent); border-color: var(--accent); }
     .actions .primary:hover:not(:disabled), .actions .primary:focus-visible { color: #ffffff; background: var(--accent-hover); border-color: var(--accent-hover); }
-    .actions button:disabled { color: #9ca5af; background: #edf0f2; border-color: #edf0f2; cursor: not-allowed; }
+    .actions button:disabled { color: var(--disabled-text); background: var(--disabled-bg); border-color: var(--disabled-line); cursor: not-allowed; }
     .modal-navigation { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     @media (max-width: 1180px) { .gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
     @media (max-width: 820px) {
@@ -288,7 +328,8 @@
     }
     @media (max-width: 560px) {
       .topbar, .filter-row { display: block; }
-      .status { margin-top: 16px; text-align: left; }
+      .top-actions { margin-top: 16px; justify-content: flex-start; }
+      .status { text-align: left; }
       .search { width: 100%; margin-top: 11px; }
       .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .pager button { min-width: 33px; padding: 0 7px; }
@@ -309,7 +350,10 @@
         <h1>SVGA.WANG 公开商品目录</h1>
         <p class="intro">仅包含匿名公开商品元数据与可公开预览媒体。</p>
       </div>
-      <p class="status"><strong id="range-status">Loading</strong><span id="total-status"></span></p>
+      <div class="top-actions">
+        <p class="status"><strong id="range-status">Loading</strong><span id="total-status"></span></p>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换深浅主题">浅色</button>
+      </div>
     </header>
 
     <section class="filters" aria-label="商品筛选">
@@ -394,6 +438,7 @@ const copyButton = document.querySelector('#copy-button');
 const openSource = document.querySelector('#open-source');
 const previousButton = document.querySelector('#previous-button');
 const nextButton = document.querySelector('#next-button');
+const themeToggle = document.querySelector('#theme-toggle');
 
 function missingMedia(container, message) {
   const placeholder = document.createElement('div');
@@ -919,6 +964,26 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowLeft') moveModal(-1);
   if (event.key === 'ArrowRight') moveModal(1);
 });
+
+function readTheme() {
+  try { return localStorage.getItem('svga-theme'); } catch { return null; }
+}
+function writeTheme(theme) {
+  try { localStorage.setItem('svga-theme', theme); } catch { /* file:// 等受限环境忽略 */ }
+}
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  const label = theme === 'dark' ? '浅色' : '深色';
+  themeToggle.textContent = label;
+  themeToggle.setAttribute('aria-label', '切换深浅主题（当前' + (theme === 'dark' ? '深色' : '浅色') + '）');
+}
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.dataset.theme || 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  writeTheme(next);
+});
+applyTheme(readTheme() === 'light' ? 'light' : 'dark');
 
 renderCatalogPage();
   </script>
