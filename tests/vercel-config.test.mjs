@@ -8,6 +8,8 @@ const ignoreFile = new URL('../.vercelignore', import.meta.url);
 test('standalone deployment publishes only generated output', () => {
   const config = JSON.parse(readFileSync(configFile, 'utf8'));
 
+  assert.equal(config.framework, null);
+  assert.equal(config.buildCommand, '');
   assert.equal(config.outputDirectory, 'output');
   assert.equal(config.cleanUrls, true);
 });
@@ -24,6 +26,10 @@ test('standalone deployment excludes collector inputs', () => {
     'scripts',
     'tests',
     'svga_public_catalog/',
+    'requirements.txt',
+    'pyproject.toml',
     'output/*.json',
+    'output/.detail_cache/',
+    'output/.related_detail_cache/',
   ]);
 });

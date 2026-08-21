@@ -75,6 +75,7 @@ const html = String.raw`<!doctype html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
   <title>SVGA.WANG 公开商品目录</title>
   <style>
     :root {

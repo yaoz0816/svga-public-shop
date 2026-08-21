@@ -15,3 +15,4 @@ output/.related_detail_cache/
 # 过期备份数据
 output/svga-public-catalog.pre-layout.json
 output/svga-public-catalog.old-schema.bak.json
+.vercel

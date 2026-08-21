@@ -41,7 +41,12 @@ test('standalone catalog page embeds normalized data and preview controls', () =
   assert.match(html, /class="detail-dialog"/);
   assert.match(html, /不支持在浏览器中预览/);
   assert.match(html, /该媒体无法在浏览器中预览。/);
-  assert.doesNotMatch(html, /referrerpolicy|no-referrer|fetch\(/i);
+  assert.match(
+    html,
+    /<meta name="referrer" content="no-referrer">/,
+    'the page suppresses Referer so the CDN hotlink check allows media',
+  );
+  assert.doesNotMatch(html, /referrerpolicy|fetch\(/i);
   assert.doesNotMatch(
     html,
     /goods_promotion_price|goods_marketprice|goods_price/,

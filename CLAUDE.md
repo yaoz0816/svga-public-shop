@@ -17,6 +17,7 @@ SVGA.WANG 公开商品目录 → 自包含静态画廊（Vercel 部署）。采�
 - **gapi 限流**：`gapi.qianmusoft.com/mobile/index/getGoodsDetail` 按 IP 约 115-120 次请求/窗口即全站超时（连已知好 id 也超时），并发触发更早。批量抓取必须按批次：每 IP 抓 ~115 个 → 用户切 IP → 断点续跑。探测 IP 用已知好 id（如 `getGoodsDetail?goods_id=12241`）。
 - **价格字段**：一律 `**`（登录态或打码，不采集）。
 - **预览判定**：部分媒体无法在浏览器中预览，画廊需兜底文案。
+- **CDN 防盗链**：媒体 CDN `pic.qianmukeji.cn` 按 Referer 防盗链——无 Referer 或 `svga.wang` 放行（206），其他域名 403。线上页面因此必须带 `<meta name="referrer" content="no-referrer">`（已内嵌），否则 https 域名下所有媒体 403。改画廊头部时勿删该 meta。
 
 ## 数据 Schema
 

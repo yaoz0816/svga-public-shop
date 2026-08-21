@@ -3,4 +3,8 @@ docs
 scripts
 tests
 svga_public_catalog/
+requirements.txt
+pyproject.toml
 output/*.json
+output/.detail_cache/
+output/.related_detail_cache/
